@@ -421,6 +421,17 @@
                         
                         <ul>
                                 <li class="cTableTitle">
+                                    <a href="observe.html">
+                                        
+                                            ballerina/<span class="bold">observe</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
                                     <a href="reflect.html">
                                         
                                             ballerina/<span class="bold">reflect</span>
@@ -446,6 +457,17 @@
                                     <a href="sql.html">
                                         
                                             ballerina/<span class="bold">sql</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
+                                    <a href="streams.html">
+                                        
+                                            ballerina/<span class="bold">streams</span>
                                         
                                         
                                     </a>
@@ -810,6 +832,20 @@
                             </li>
                         </ul>
                     
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
                 </div>
             </div>
         </div>
@@ -830,7 +866,9 @@
 <p>This package contains services that register listeners against a local folder and identify events that create, modify, and delete files.</p>
 <h2>Samples</h2>
 <p>The sample given below shows how an endpoint is used to listen to the local folder. The <code>onCreate()</code> resource method gets invoked when a file is created inside the <code>target/fs</code> folder. Use the <code>onDelete()</code> and <code>onModify()</code> methods to listen to the delete and modify events.</p>
-<pre><code class="language-ballerina">endpoint file:Listener localFolder {
+<pre><code class="language-ballerina">import ballerina/file;
+
+endpoint file:Listener localFolder {
     path:&quot;target/fs&quot;
 };
 service fileSystem bind localFolder {
@@ -940,7 +978,7 @@ service fileSystem bind localFolder {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="FileEvent">
-                                                        <span class="fw-record sm-icon"></span> public type FileEvent
+                                                        <span class="fw-record sm-icon"></span> public type FileEvent record
                                                     </h2>
                                                     
                                                         <p>
@@ -992,7 +1030,7 @@ service fileSystem bind localFolder {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="ListenerEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type ListenerEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type ListenerEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>

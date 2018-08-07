@@ -28,13 +28,9 @@ documentation {
 }
 public type Client object {
 
-    public {
-        HubClientEndpointConfig config;
-    }
+    public HubClientEndpointConfig config;
 
-    private {
-        http:Client httpClientEndpoint;
-    }
+    private http:Client httpClientEndpoint;
 
     documentation {
         Called when the endpoint is being initialized during package initialization.
@@ -74,7 +70,7 @@ documentation {
     F{{auth}} Authentication mechanism for the underlying HTTP Client
     F{{followRedirects}} HTTP redirect related configuration
 }
-public type HubClientEndpointConfig {
+public type HubClientEndpointConfig record {
     string url,
     http:SecureSocket? clientSecureSocket,
     http:AuthConfig? auth,

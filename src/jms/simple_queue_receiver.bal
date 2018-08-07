@@ -25,15 +25,11 @@ documentation { Simplified queue receiver endpoint.
 }
 public type SimpleQueueReceiver object {
 
-    public {
-        SimpleQueueReceiverEndpointConfiguration config;
-    }
+    public SimpleQueueReceiverEndpointConfiguration config;
 
-    private {
-        Connection? connection;
-        Session? session;
-        QueueReceiver? queueReceiver;
-    }
+    private Connection? connection;
+    private Session? session;
+    private QueueReceiver? queueReceiver;
 
     documentation { Initialize the SimpleQueueReceiver endpoint
         P{{c}} Configurations related to the SimpleQueueReceiver endpoint
@@ -125,7 +121,7 @@ documentation { Configurations related to the SimpleQueueReceiver endpoint
     F{{properties}} Additional properties use in initializing the initial context
     F{{queueName}} Name of the target queue
 }
-public type SimpleQueueReceiverEndpointConfiguration {
+public type SimpleQueueReceiverEndpointConfiguration record {
     string initialContextFactory = "bmbInitialContextFactory";
     string providerUrl = "amqp://admin:admin@ballerina/default?brokerlist='tcp://localhost:5672'";
     string connectionFactoryName = "ConnectionFactory";

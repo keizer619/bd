@@ -421,6 +421,17 @@
                         
                         <ul>
                                 <li class="cTableTitle">
+                                    <a href="observe.html">
+                                        
+                                            ballerina/<span class="bold">observe</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
                                     <a href="reflect.html">
                                         
                                             ballerina/<span class="bold">reflect</span>
@@ -446,6 +457,17 @@
                                     <a href="sql.html">
                                         
                                             ballerina/<span class="bold">sql</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
+                                    <a href="streams.html">
+                                        
+                                            ballerina/<span class="bold">streams</span>
                                         
                                         
                                     </a>
@@ -1698,6 +1720,20 @@
                             </li>
                         </ul>
                     
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
                 </div>
             </div>
         </div>
@@ -1732,7 +1768,7 @@ supported by this package:</p>
 import ballerina/log;
 
 // Create a simple queue receiver.
-mb:SimpleQueueReceiver receiver {
+endpoint mb:SimpleQueueReceiver receiver {
    host: &quot;localhost&quot;,
    port: 5672,
    queueName: &quot;MyQueue&quot;
@@ -2173,7 +2209,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="BrokerURLConfig">
-                                                        <span class="fw-record sm-icon"></span> public type BrokerURLConfig
+                                                        <span class="fw-record sm-icon"></span> public type BrokerURLConfig record
                                                     </h2>
                                                     
                                                         <p>
@@ -2263,7 +2299,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="ConsumerEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type ConsumerEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type ConsumerEndpointConfiguration record
                                                     </h2>
                                                      
                                                     <table>
@@ -2306,7 +2342,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="ServiceSecureSocket">
-                                                        <span class="fw-record sm-icon"></span> public type ServiceSecureSocket
+                                                        <span class="fw-record sm-icon"></span> public type ServiceSecureSocket record
                                                     </h2>
                                                     
                                                         <p>
@@ -2364,7 +2400,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="SimpleDurableTopicSubscriberEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type SimpleDurableTopicSubscriberEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type SimpleDurableTopicSubscriberEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>
@@ -2501,7 +2537,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="SimpleQueueListenerEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type SimpleQueueListenerEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type SimpleQueueListenerEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>
@@ -2630,7 +2666,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="SimpleQueueSenderEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type SimpleQueueSenderEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type SimpleQueueSenderEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>
@@ -2744,7 +2780,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="SimpleTopicPublisherEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type SimpleTopicPublisherEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type SimpleTopicPublisherEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>
@@ -2858,7 +2894,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="SimpleTopicSubscriberEndpointConfiguration">
-                                                        <span class="fw-record sm-icon"></span> public type SimpleTopicSubscriberEndpointConfiguration
+                                                        <span class="fw-record sm-icon"></span> public type SimpleTopicSubscriberEndpointConfiguration record
                                                     </h2>
                                                     
                                                         <p>
@@ -2988,7 +3024,7 @@ A new connection and a session will be create when this endpoint is initialize.<
                                                 <!-- Records -->
                                                 
                                                     <h2 id="Store">
-                                                        <span class="fw-record sm-icon"></span> public type Store
+                                                        <span class="fw-record sm-icon"></span> public type Store record
                                                     </h2>
                                                     
                                                         <p>

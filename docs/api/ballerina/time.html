@@ -421,6 +421,17 @@
                         
                         <ul>
                                 <li class="cTableTitle">
+                                    <a href="observe.html">
+                                        
+                                            ballerina/<span class="bold">observe</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
                                     <a href="reflect.html">
                                         
                                             ballerina/<span class="bold">reflect</span>
@@ -446,6 +457,17 @@
                                     <a href="sql.html">
                                         
                                             ballerina/<span class="bold">sql</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
+                                    <a href="streams.html">
+                                        
+                                            ballerina/<span class="bold">streams</span>
                                         
                                         
                                     </a>
@@ -539,6 +561,20 @@
                 </div>
                 <div class="cLectColStyle">
                     <div class="cBallerina-io-docs-Title">TABLE OF CONTENTS</div>
+                    
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
                     
                         <ul class=" ">
                             <li>
@@ -1130,15 +1166,15 @@ string weekday = time.weekday(); // Day of the week. E.g., “TUESDAY”.
 <h3>Creating a time/date object</h3>
 <pre><code class="language-ballerina">// Create an object of type ‘Time’ with time zone.
 time:Timezone zoneIdValue = {zoneId:&quot;America/Panama&quot;};
-time:Time time1 = new (1498488382000, zoneValue);
+time:Time time1 = new (1498488382000, zoneIdValue);
 
 // Create an object of type ‘Time’ with the time zone offset.
 time:Timezone zoneOffsetValue = {zoneId:&quot;-05:00&quot;};
-time:Time time2 =new (1498488382000, zoneValue);
+time:Time time2 =new (1498488382000, zoneOffsetValue);
 
 // Create an object of type ‘Time’ without the time zone.
 time:Timezone noZoneValue = {zoneId:&quot;&quot;};
-time:Time time3 = new (1498488382000, zoneValue);
+time:Time time3 = new (1498488382000, noZoneValue);
 
 // Create an object of type ‘Time’ with time and date. E.g., 2018-03-28T23:42:45.554-05:00  
 time:Time dateTime = time:createTime(2018, 3, 28, 23, 42, 45, 554, &quot;America/Panama&quot;);
@@ -1403,7 +1439,7 @@ int diffInMillis = time1.time - time2.time;
                                                 <!-- Records -->
                                                 
                                                     <h2 id="Timezone">
-                                                        <span class="fw-record sm-icon"></span> public type Timezone
+                                                        <span class="fw-record sm-icon"></span> public type Timezone record
                                                     </h2>
                                                     
                                                         <p>

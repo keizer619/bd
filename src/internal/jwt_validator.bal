@@ -20,7 +20,7 @@ import ballerina/time;
 documentation {
     Represents JWT validator configurations.
 }
-public type JWTValidatorConfig {
+public type JWTValidatorConfig record {
     string issuer,
     string audience,
     int clockSkew,
@@ -184,7 +184,7 @@ config) returns (boolean|error) {
         return err;
     }
     if (!validateIssuer(jwtPayload, config)) {
-        error err = {message:"No Registered IDP found for the JWT with issuer name : " + jwtPayload.iss};
+        error err = {message:"JWT contained invalid issuer name : " + jwtPayload.iss};
         return err;
     }
     if (!validateAudience(jwtPayload, config)) {

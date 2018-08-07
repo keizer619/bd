@@ -29,16 +29,12 @@ documentation {
 }
 public type Listener object {
 
-    public {
-        @readonly Remote remote;
-        @readonly Local local;
-        @readonly string protocol;
-    }
+    @readonly public Remote remote;
+    @readonly public Local local;
+    @readonly public string protocol;
 
-    private {
-        Connection conn;
-        ServiceEndpointConfiguration config;
-    }
+    private Connection conn;
+    private ServiceEndpointConfiguration config;
 
     documentation {
         Gets invoked during package initialization to initialize the endpoint.
@@ -80,7 +76,7 @@ documentation {
     F{{host}} The remote host name/IP
     F{{port}} The remote port
 }
-public type Remote {
+public type Remote record {
     @readonly string host;
     @readonly int port;
 };
@@ -91,7 +87,7 @@ documentation {
     F{{host}} The local host name/IP
     F{{port}} The local port
 }
-public type Local {
+public type Local record {
     @readonly string host;
     @readonly int port;
 };
@@ -106,7 +102,7 @@ documentation {
     F{{maxEntityBodySize}} Maximum allowed size for the entity body. Exceeding this limit will result in a
                            `413 - Payload Too Large` response.
 }
-public type RequestLimits {
+public type RequestLimits record {
     int maxUriLength = -1;
     int maxHeaderSize = -1;
     int maxEntityBodySize = -1;
@@ -125,8 +121,10 @@ documentation {
     F{{requestLimits}} Configures the parameters for request validation
     F{{filters}} If any pre-processing needs to be done to the request before dispatching the request to the
                  resource, filters can applied
+    F{{timeoutMillis}} Period of time in milliseconds that a connection waits for a read/write operation. Use value 0 to
+                       disable timeout
 }
-public type ServiceEndpointConfiguration {
+public type ServiceEndpointConfiguration record {
     string host,
     int port,
     KeepAlive keepAlive = KEEPALIVE_AUTO,
@@ -134,6 +132,7 @@ public type ServiceEndpointConfiguration {
     string httpVersion = "1.1",
     RequestLimits? requestLimits,
     Filter[] filters,
+    int timeoutMillis = DEFAULT_LISTENER_TIMEOUT,
 };
 
 documentation {
@@ -149,7 +148,7 @@ documentation {
     F{{shareSession}} Enable/disable new SSL session creation
     F{{ocspStapling}} Enable/disable OCSP stapling
 }
-public type ServiceSecureSocket {
+public type ServiceSecureSocket record {
     TrustStore? trustStore,
     KeyStore? keyStore,
     Protocols? protocol,
@@ -172,7 +171,7 @@ documentation { Keeps the connection alive irrespective of the `connection` head
 documentation { Closes the connection irrespective of the `connection` header value }
 @final public KeepAlive KEEPALIVE_NEVER = "NEVER";
 
-public function Listener::init (ServiceEndpointConfiguration c) {
+function Listener::init (ServiceEndpointConfiguration c) {
     self.config = c;
     var err = self.initEndpoint();
     if (err != null) {
@@ -193,19 +192,16 @@ documentation {
     F{{attributes}} A `map` to store connection related attributes
 }
 public type WebSocketListener object {
-    public {
-        @readonly string id;
-        @readonly string negotiatedSubProtocol;
-        @readonly boolean isSecure;
-        @readonly boolean isOpen;
-        @readonly map attributes;
-    }
 
-    private {
-        WebSocketConnector conn;
-        ServiceEndpointConfiguration config;
-        Listener httpEndpoint;
-    }
+    @readonly public string id;
+    @readonly public string negotiatedSubProtocol;
+    @readonly public boolean isSecure;
+    @readonly public boolean isOpen;
+    @readonly public map attributes;
+
+    private WebSocketConnector conn;
+    private ServiceEndpointConfiguration config;
+    private Listener httpEndpoint;
 
     public new() {
     }

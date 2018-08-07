@@ -27,7 +27,7 @@ documentation {
     F{{poolOptions}} Properties for the connection pool configuration. Refer `sql:PoolOptions` for more details
     F{{dbOptions}} A map of DB specific properties
 }
-public type ClientEndpointConfiguration {
+public type ClientEndpointConfiguration record {
     string host,
     int port = 3306,
     string name,
@@ -44,10 +44,8 @@ documentation {
 }
 
 public type Client object {
-    private {
-        ClientEndpointConfiguration config;
-        sql:CallerActions mysqlClient;
-    }
+    private ClientEndpointConfiguration config;
+    private sql:CallerActions mysqlClient;
 
     documentation {
         Gets called when the endpoint is being initialized during the package initialization.

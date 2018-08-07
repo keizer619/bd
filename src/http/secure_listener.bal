@@ -24,10 +24,9 @@ documentation {
     F{{httpListener}} HTTP Listener instance
 }
 public type SecureListener object {
-    public {
-        SecureEndpointConfiguration config;
-        Listener httpListener;
-    }
+
+    public SecureEndpointConfiguration config;
+    public Listener httpListener;
 
     new() {
         httpListener = new;
@@ -80,9 +79,11 @@ documentation {
     F{{httpVersion}} Highest HTTP version supported
     F{{requestLimits}} Request validation limits configuration
     F{{filters}} Filters to be applied to the request before being dispatched to the actual `resource`
+    F{{timeoutMillis}} Period of time in milliseconds that a connection waits for a read/write operation. Use value 0
+                       to disable timeout
     F{{authProviders}} The array of authentication providers which are used to authenticate the users
 }
-public type SecureEndpointConfiguration {
+public type SecureEndpointConfiguration record {
     string host,
     int port = 9090,
     KeepAlive keepAlive = KEEPALIVE_AUTO,
@@ -90,6 +91,7 @@ public type SecureEndpointConfiguration {
     string httpVersion = "1.1",
     RequestLimits? requestLimits,
     Filter[] filters,
+    int timeoutMillis = DEFAULT_LISTENER_TIMEOUT,
     AuthProvider[]? authProviders,
 };
 
@@ -111,7 +113,7 @@ documentation {
     F{{signingAlg}} The signing algorithm which is used to sign the JWT token
     F{{propagateToken}} `true` if propagating authentication info as JWT
 }
-public type AuthProvider {
+public type AuthProvider record {
     string scheme,
     string id,
     string authStoreProvider,
@@ -128,7 +130,7 @@ public type AuthProvider {
     boolean propagateToken,
 };
 
-public function SecureListener::init(SecureEndpointConfiguration c) {
+function SecureListener::init(SecureEndpointConfiguration c) {
     addAuthFiltersForSecureListener(c);
     self.httpListener.init(c);
 }
@@ -238,24 +240,24 @@ function createAuthHandler(AuthProvider authProvider) returns HttpAuthnHandler {
     }
 }
 
-public function SecureListener::register(typedesc serviceType) {
+function SecureListener::register(typedesc serviceType) {
     self.httpListener.register(serviceType);
 }
 
-public function SecureListener::initEndpoint() returns (error) {
+function SecureListener::initEndpoint() returns (error) {
     return self.httpListener.initEndpoint();
 }
 
-public function SecureListener::start() {
+function SecureListener::start() {
     self.httpListener.start();
 }
 
-public function SecureListener::getCallerActions() returns (SecureListenerActions) {
+function SecureListener::getCallerActions() returns (SecureListenerActions) {
     SecureListenerActions secureListenerActions = new (self.httpListener.getCallerActions());
     return secureListenerActions;
 }
 
-public function SecureListener::stop() {
+function SecureListener::stop() {
     self.httpListener.stop();
 }
 
@@ -283,9 +285,7 @@ documentation {
 }
 public type SecureListenerActions object {
 
-    public {
-        Connection httpCallerActions;
-    }
+    public Connection httpCallerActions;
 
     documentation {
         The secure listener caller actions initializer.
@@ -297,11 +297,11 @@ public type SecureListenerActions object {
     documentation {
         Sends the outbound response to the caller.
 
-        P{{message}} The outbound response or any payload of type `string`, `xml`, `json`, `blob`, `io:ByteChannel`
+        P{{message}} The outbound response or any payload of type `string`, `xml`, `json`, `byte[]`, `io:ByteChannel`
                      or `mime:Entity[]`
         R{{}} Returns an `error` if failed to respond
     }
-    public function respond(Response|string|xml|json|blob|io:ByteChannel|mime:Entity[]|() message) returns error? {
+    public function respond(Response|string|xml|json|byte[]|io:ByteChannel|mime:Entity[]|() message) returns error? {
         return httpCallerActions.respond(message);
     }
 

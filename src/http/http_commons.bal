@@ -60,7 +60,7 @@ documentation {
     F{{path}} Path to the trust store file
     F{{password}} Trust store password
 }
-public type TrustStore {
+public type TrustStore record {
     string path,
     string password,
 };
@@ -71,7 +71,7 @@ documentation {
     F{{path}} Path to the key store file
     F{{password}} Key store password
 }
-public type KeyStore {
+public type KeyStore record {
     string path,
     string password,
 };
@@ -82,7 +82,7 @@ documentation {
     F{{name}} SSL Protocol to be used (e.g.: TLS1.2)
     F{{versions}} SSL/TLS protocols to be enabled (e.g.: TLSv1,TLSv1.1,TLSv1.2)
 }
-public type Protocols {
+public type Protocols record {
     string name,
     string[] versions,
 };
@@ -94,7 +94,7 @@ documentation {
     F{{cacheSize}} Maximum size of the cache
     F{{cacheValidityPeriod}} The time period for which a cache entry is valid
 }
-public type ValidateCert {
+public type ValidateCert record {
     boolean enable,
     int cacheSize,
     int cacheValidityPeriod,
@@ -107,7 +107,7 @@ documentation {
     F{{cacheSize}} Maximum size of the cache
     F{{cacheValidityPeriod}} The time period for which a cache entry is valid
 }
-public type ServiceOcspStapling {
+public type ServiceOcspStapling record {
     boolean enable,
     int cacheSize,
     int cacheValidityPeriod,
@@ -126,7 +126,7 @@ documentation {
 //TODO: Make the error nillable
 public native function parseHeader (string headerValue) returns (string, map)|error;
 
-function buildRequest(Request|string|xml|json|blob|io:ByteChannel|mime:Entity[]|() message) returns Request {
+function buildRequest(Request|string|xml|json|byte[]|io:ByteChannel|mime:Entity[]|() message) returns Request {
     Request request = new;
     match message {
         () => {}
@@ -134,14 +134,14 @@ function buildRequest(Request|string|xml|json|blob|io:ByteChannel|mime:Entity[]|
         string textContent => {request.setTextPayload(textContent);}
         xml xmlContent => {request.setXmlPayload(xmlContent);}
         json jsonContent => {request.setJsonPayload(jsonContent);}
-        blob blobContent => {request.setBinaryPayload(blobContent);}
+        byte[] blobContent => {request.setBinaryPayload(blobContent);}
         io:ByteChannel byteChannelContent => {request.setByteChannel(byteChannelContent);}
         mime:Entity[] bodyParts => {request.setBodyParts(bodyParts);}
     }
     return request;
 }
 
-function buildResponse(Response|string|xml|json|blob|io:ByteChannel|mime:Entity[]|() message) returns Response {
+function buildResponse(Response|string|xml|json|byte[]|io:ByteChannel|mime:Entity[]|() message) returns Response {
     Response response = new;
     match message {
         () => {}
@@ -149,7 +149,7 @@ function buildResponse(Response|string|xml|json|blob|io:ByteChannel|mime:Entity[
         string textContent => {response.setTextPayload(textContent);}
         xml xmlContent => {response.setXmlPayload(xmlContent);}
         json jsonContent => {response.setJsonPayload(jsonContent);}
-        blob blobContent => {response.setBinaryPayload(blobContent);}
+        byte[] blobContent => {response.setBinaryPayload(blobContent);}
         io:ByteChannel byteChannelContent => {response.setByteChannel(byteChannelContent);}
         mime:Entity[] bodyParts => {response.setBodyParts(bodyParts);}
     }

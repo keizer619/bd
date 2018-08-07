@@ -23,16 +23,12 @@ documentation { Simple Durable Topic Subscriber endpoint
 }
 public type SimpleDurableTopicSubscriber object {
 
-    public {
-        SimpleDurableTopicSubscriberEndpointConfiguration config;
-    }
+    public SimpleDurableTopicSubscriberEndpointConfiguration config;
 
-    private {
-        Connection? connection;
-        Session? session;
-        DurableTopicSubscriber? subscriber;
-        SimpleDurableTopicSubscriberActions? consumerActions;
-    }
+    private Connection? connection;
+    private Session? session;
+    private DurableTopicSubscriber? subscriber;
+    private SimpleDurableTopicSubscriberActions? consumerActions;
 
     documentation { Initializes the simple durable topic subscriber endpoint
         P{{c}} Configurations related to the endpoint
@@ -130,7 +126,7 @@ documentation { Configurations of the simple durable topic subscriber endpoint
     F{{messageSelector}} JMS selector statement
     F{{topicPattern}} Name or the pattern of the topic subscription
 }
-public type SimpleDurableTopicSubscriberEndpointConfiguration {
+public type SimpleDurableTopicSubscriberEndpointConfiguration record {
     string initialContextFactory = "bmbInitialContextFactory";
     string providerUrl = "amqp://admin:admin@ballerina/default?brokerlist='tcp://localhost:5672'";
     string connectionFactoryName = "ConnectionFactory";
@@ -146,11 +142,9 @@ documentation { Caller actions related to durable topic subscriber endpoint
 }
 public type SimpleDurableTopicSubscriberActions object {
 
-    private {
-        DurableTopicSubscriberActions helper;
-        Session session;
-        string identifier;
-    }
+    private DurableTopicSubscriberActions helper;
+    private Session session;
+    private string identifier;
 
     new(helper, session, identifier) {
     }

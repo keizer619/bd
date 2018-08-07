@@ -22,10 +22,8 @@ documentation { JMS topic publisher
     F{{config}} Topic publisher endpoint configuration
 }
 public type TopicPublisher object {
-    public {
-        TopicPublisherActions producerActions;
-        TopicPublisherEndpointConfiguration config;
-    }
+    public TopicPublisherActions producerActions;
+    public TopicPublisherEndpointConfiguration config;
 
     documentation { Topic publisher contructor }
     new() {
@@ -72,7 +70,7 @@ documentation { Configuration related to the topic publisher endpoint
     F{{session}} Session object used to create topic publisher
     F{{topicPattern}} Topic name pattern
 }
-public type TopicPublisherEndpointConfiguration {
+public type TopicPublisherEndpointConfiguration record {
     Session? session;
     string topicPattern;
 };

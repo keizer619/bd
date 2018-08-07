@@ -23,7 +23,7 @@ documentation {
     F{{zoneId}} Zone short ID or offset string
     F{{zoneOffset}} The offset in seconds
 }
-public type Timezone {
+public type Timezone record {
     string zoneId,
     int zoneOffset,
 };
@@ -35,10 +35,8 @@ documentation {
 }
 public type Time object {
 
-    public {
-        int time;
-        Timezone zone;
-    }
+    public int time;
+    public Timezone zone;
 
     public new (time, zone) {}
 

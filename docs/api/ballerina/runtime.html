@@ -421,6 +421,17 @@
                         
                         <ul>
                                 <li class="cTableTitle">
+                                    <a href="observe.html">
+                                        
+                                            ballerina/<span class="bold">observe</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
                                     <a href="reflect.html">
                                         
                                             ballerina/<span class="bold">reflect</span>
@@ -446,6 +457,17 @@
                                     <a href="sql.html">
                                         
                                             ballerina/<span class="bold">sql</span>
+                                        
+                                        
+                                    </a>
+                                </li>
+                        </ul>
+                        
+                        <ul>
+                                <li class="cTableTitle">
+                                    <a href="streams.html">
+                                        
+                                            ballerina/<span class="bold">streams</span>
                                         
                                         
                                     </a>
@@ -539,6 +561,13 @@
                 </div>
                 <div class="cLectColStyle">
                     <div class="cBallerina-io-docs-Title">TABLE OF CONTENTS</div>
+                    
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
                     
                         <ul class=" ">
                             <li>
@@ -918,6 +947,13 @@
                             </li>
                         </ul>
                     
+                        <ul class=" ">
+                            <li>
+                                <!--Package Name-->
+                                  
+                            </li>
+                        </ul>
+                    
                 </div>
             </div>
         </div>
@@ -942,7 +978,7 @@ The Invocation Context comprises of a unique ID, a <code>UserPrincipal</code> in
 <code>AuthContext</code> instance that has the authentication related details if available.</p>
 <h3>Errors</h3>
 <p>The runtime package includes the <code>NullReferenceException</code> and <code>IllegalStateException</code> error types. These two error
-types wrap the <code>error</code> type defined in the <code>ballerina/builtin</code> package. Furthermore, there are utility methods to
+types wrap the <code>error</code> type defined in the <code>ballerina/runtime</code> package. Furthermore, there are utility methods to
 retrieve the current call stack and the particular call stack frame for an error.</p>
 <p>Additionally, the runtime package also contains utility methods to halt a <code>worker</code> (sleep) for a given period of time
 and to look up properties from the runtime context.</p>
@@ -1235,7 +1271,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="AuthContext">
-                                                        <span class="fw-record sm-icon"></span> public type AuthContext
+                                                        <span class="fw-record sm-icon"></span> public type AuthContext record
                                                     </h2>
                                                     
                                                         <p>
@@ -1284,7 +1320,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="CallFailedException">
-                                                        <span class="fw-record sm-icon"></span> public type CallFailedException
+                                                        <span class="fw-record sm-icon"></span> public type CallFailedException record
                                                     </h2>
                                                     
                                                         <p>
@@ -1344,7 +1380,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="CallStackElement">
-                                                        <span class="fw-record sm-icon"></span> public type CallStackElement
+                                                        <span class="fw-record sm-icon"></span> public type CallStackElement record
                                                     </h2>
                                                     
                                                         <p>
@@ -1412,7 +1448,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="IllegalStateException">
-                                                        <span class="fw-record sm-icon"></span> public type IllegalStateException
+                                                        <span class="fw-record sm-icon"></span> public type IllegalStateException record
                                                     </h2>
                                                     
                                                         <p>
@@ -1464,7 +1500,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="InvocationContext">
-                                                        <span class="fw-record sm-icon"></span> public type InvocationContext
+                                                        <span class="fw-record sm-icon"></span> public type InvocationContext record
                                                     </h2>
                                                     
                                                         <p>
@@ -1527,7 +1563,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="NullReferenceException">
-                                                        <span class="fw-record sm-icon"></span> public type NullReferenceException
+                                                        <span class="fw-record sm-icon"></span> public type NullReferenceException record
                                                     </h2>
                                                     
                                                         <p>
@@ -1579,7 +1615,7 @@ try {
                                                 <!-- Records -->
                                                 
                                                     <h2 id="UserPrincipal">
-                                                        <span class="fw-record sm-icon"></span> public type UserPrincipal
+                                                        <span class="fw-record sm-icon"></span> public type UserPrincipal record
                                                     </h2>
                                                     
                                                         <p>

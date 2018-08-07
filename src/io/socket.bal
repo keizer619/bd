@@ -26,13 +26,34 @@ documentation {
 }
 public type Socket object {
 
-    public {
-        @readonly ByteChannel channel;
-        @readonly int port;
-        @readonly int localPort;
-        @readonly string address;
-        @readonly string localAddress;
+    @readonly public ByteChannel channel;
+    @readonly public int remotePort;
+    @readonly public int localPort;
+    @readonly public string remoteAddress;
+    @readonly public string localAddress;
+
+    public new() {
+        init();
     }
+
+    documentation {
+        Initializes a socket.
+    }
+    native function init();
+
+    documentation {
+        Binds socket to a local port.
+
+        R{{}} An error if could not bind to the port
+    }
+    public native function bindAddress(int port, string? interface = ()) returns error?;
+
+    documentation {
+        Open a connection with remote server.
+
+        R{{}} An error if could not connect with the remote server.
+    }
+    public native function connect(@sensitive string host, @sensitive int port) returns error?;
 
     documentation {
         Closes a socket connection.
@@ -57,6 +78,42 @@ public type Socket object {
 };
 
 documentation {
+    Represents a TCP server socket.
+}
+public type ServerSocket object {
+
+    public new() {
+        init();
+    }
+
+    documentation {
+        Initializes a server socket.
+    }
+    native function init();
+
+    documentation {
+        Binds socket to a local port.
+
+        R{{}} An error if could not bind to the port
+    }
+    public native function bindAddress(int port, string? interface = ()) returns error?;
+
+    documentation {
+        This blocking function will wait until new client socket connect.
+
+        R{{}} An error if could not create new socket.
+    }
+    public native function accept() returns @tainted Socket|error;
+
+    documentation {
+        Closes a socket connection.
+
+        R{{}} An error if the connection could not be closed properly
+    }
+    public native function close() returns error?;
+};
+
+documentation {
     SocketProperties represents the properties which are used to configure TCP connection.
 
     F{{localPort}} Local port the socket client should bind
@@ -69,7 +126,7 @@ documentation {
     F{{ciphers}} Encrypt/decrypt algorithms (i.e RSA, SHA-256)
     F{{sslProtocol}} Supported SSL protocols (i.e SSL, TLS)
 }
-public type SocketProperties {
+public type SocketProperties record {
     int localPort;
     string keyStoreFile;
     string keyStorePassword;

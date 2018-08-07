@@ -128,8 +128,8 @@ documentation {
 documentation {
     Object representing an intent verification request received.
 
-    F{{mode}} The mode specified whether intent is being verified for subscription or unsubscription
-    F{{topic}} The for which intent is being verified for subscription or unsubscription
+    F{{mode}} The mode specified in the intent verification request, subscription or unsubscription
+    F{{topic}} The topic for which intent is verified to subscribe/unsubscribe
     F{{challenge}} The challenge to be echoed to verify intent to subscribe/unsubscribe
     F{{leaseSeconds}} The lease seconds period for which a subscription will be active if intent verification
     is being done for subscription
@@ -137,42 +137,40 @@ documentation {
 }
 public type IntentVerificationRequest object {
 
-    public {
-        string mode;
-        string topic;
-        string challenge;
-        int leaseSeconds;
-        http:Request request;
-    }
+    public string mode;
+    public string topic;
+    public string challenge;
+    public int leaseSeconds;
+    public http:Request request;
 
     documentation {
         Builds the response for the request, verifying intention to subscribe, if the topic matches that expected.
 
-        P{{t}} The topic for which subscription should be accepted
+        P{{expectedTopic}} The topic for which subscription should be accepted
         R{{}} `http:Response` The response to the hub verifying/denying intent to subscribe
     }
-    public function buildSubscriptionVerificationResponse(string t) returns http:Response;
+    public function buildSubscriptionVerificationResponse(string expectedTopic) returns http:Response;
 
     documentation {
         Builds the response for the request, verifying intention to unsubscribe, if the topic matches that expected.
 
-        P{{t}} The topic for which unsubscription should be accepted
+        P{{expectedTopic}} The topic for which unsubscription should be accepted
         R{{}} `http:Response` The response to the hub verifying/denying intent to unsubscribe
     }
-    public function buildUnsubscriptionVerificationResponse(string t) returns http:Response;
+    public function buildUnsubscriptionVerificationResponse(string expectedTopic) returns http:Response;
 
 };
 
-public function IntentVerificationRequest::buildSubscriptionVerificationResponse(string t)
+function IntentVerificationRequest::buildSubscriptionVerificationResponse(string expectedTopic)
     returns http:Response {
 
-    return buildIntentVerificationResponse(self, MODE_SUBSCRIBE, t);
+    return buildIntentVerificationResponse(self, MODE_SUBSCRIBE, expectedTopic);
 }
 
-public function IntentVerificationRequest::buildUnsubscriptionVerificationResponse(string t)
+function IntentVerificationRequest::buildUnsubscriptionVerificationResponse(string expectedTopic)
     returns http:Response {
 
-    return buildIntentVerificationResponse(self, MODE_UNSUBSCRIBE, t);
+    return buildIntentVerificationResponse(self, MODE_UNSUBSCRIBE, expectedTopic);
 }
 
 documentation {
@@ -297,9 +295,7 @@ documentation {
 }
 public type Notification object {
 
-    private {
-        http:Request request;
-    }
+    private http:Request request;
 
     documentation {
         Retrieves the query parameters of the content delivery request, as a map.
@@ -418,11 +414,11 @@ public type Notification object {
     }
 
     documentation {
-        Retrieves the request payload as a `blob`.
+        Retrieves the request payload as a `byte[]`.
 
-        R{{}} The blob representation of the message payload or `error` in case of errors
+        R{{}} The byte[] representation of the message payload or `error` in case of errors
     }
-    public function getBinaryPayload() returns blob|error {
+    public function getBinaryPayload() returns byte[]|error {
         return request.getBinaryPayload();
     }
 
@@ -441,12 +437,11 @@ documentation {
     Record representing a WebSub subscription change request.
 
     F{{topic}} The topic for which the subscription/unsubscription request is sent
-    F{{callback}} The callback which should be registered/unregistered for the subscription/unsubscription request is
-                    sent
+    F{{callback}} The callback which should be registered/unregistered for the subscription/unsubscription request sent
     F{{leaseSeconds}} The lease period for which the subscription is expected to be active
     F{{secret}} The secret to be used for authenticated content distribution with this subscription
 }
-public type SubscriptionChangeRequest {
+public type SubscriptionChangeRequest record {
     string topic,
     string callback,
     int leaseSeconds,
@@ -458,9 +453,9 @@ documentation {
 
     F{{hub}} The hub at which the subscription/unsubscription was successful
     F{{topic}} The topic for which the subscription/unsubscription was successful
-    F{{response}} The response from the hub to the subscription/unsubscription requests
+    F{{response}} The response from the hub to the subscription/unsubscription request
 }
-public type SubscriptionChangeResponse {
+public type SubscriptionChangeResponse record {
     string hub,
     string topic,
     http:Response response,
@@ -484,6 +479,9 @@ documentation {
     P{{publicUrl}}                  The URL for the hub to be included in content delivery requests, defaults to
                                         `http(s)://localhost:{port}/websub/hub` if unspecified
     P{{sslEnabled}}                 Whether SSL needs to be enabled for the hub, enabled by default
+    P{{serviceSecureSocket}}        The SSL configuration for the hub service endpoint
+    P{{clientSecureSocket}}         The SSL configuration for the hub service for secure communication with remote HTTP
+                                        endpoints
     R{{}} `WebSubHub` The WebSubHub object representing the newly started up hub, or `HubStartedUpError` indicating
                         that the hub is already started, and including the WebSubHub object representing the
                         already started up hub
@@ -491,41 +489,51 @@ documentation {
 public function startUpBallerinaHub(int? port = (), int? leaseSeconds = (), string? signatureMethod = (),
                                     boolean? remotePublishingEnabled = (), string? remotePublishingMode = (),
                                     boolean? topicRegistrationRequired = (), string? publicUrl = (),
-                                    boolean? sslEnabled = ()) returns WebSubHub|HubStartedUpError {
-    hubPort = port but { () => hubPort };
-    hubLeaseSeconds = leaseSeconds but { () => hubLeaseSeconds };
-    hubSignatureMethod = signatureMethod but { () => hubSignatureMethod };
-    hubRemotePublishingEnabled = remotePublishingEnabled but { () => hubRemotePublishingEnabled };
-    hubRemotePublishingMode = remotePublishingMode but { () => hubRemotePublishingMode };
-    hubTopicRegistrationRequired = topicRegistrationRequired but { () => hubTopicRegistrationRequired };
-    hubSslEnabled = sslEnabled but { () => hubSslEnabled };
-    //reset serviceSecureSocket and secureSocket after hubSslEnabled is set
-    serviceSecureSocket = getServiceSecureSocketConfig();
-    httpSecureSocket = getSecureSocketConfig();
+                                    boolean? sslEnabled = (), http:ServiceSecureSocket? serviceSecureSocket = (),
+                                    http:SecureSocket? clientSecureSocket = ())
+    returns WebSubHub|HubStartedUpError {
+
+    hubPort = config:getAsInt("b7a.websub.hub.port", default = port but { () => DEFAULT_PORT });
+    hubLeaseSeconds = config:getAsInt("b7a.websub.hub.leasetime",
+                                      default = leaseSeconds but { () => DEFAULT_LEASE_SECONDS_VALUE });
+    hubSignatureMethod = config:getAsString("b7a.websub.hub.signaturemethod",
+                                            default = signatureMethod but { () => DEFAULT_SIGNATURE_METHOD });
+    hubRemotePublishingEnabled = config:getAsBoolean("b7a.websub.hub.remotepublish",
+                                                     default = remotePublishingEnabled but { () => false });
+    hubRemotePublishingMode = config:getAsString("b7a.websub.hub.remotepublish.mode",
+                                            default = remotePublishingMode but { () => REMOTE_PUBLISHING_MODE_DIRECT });
+    hubTopicRegistrationRequired = config:getAsBoolean("b7a.websub.hub.topicregistration",
+                                                       default = topicRegistrationRequired but { () => true });
+    hubSslEnabled = config:getAsBoolean("b7a.websub.hub.enablessl", default = sslEnabled but { () => true });
+    //set serviceSecureSocket after hubSslEnabled is set
+    if (hubSslEnabled) {
+        hubServiceSecureSocket = getServiceSecureSocketConfig(serviceSecureSocket);
+    }
+    hubClientSecureSocket = getSecureSocketConfig(clientSecureSocket);
     //reset the hubUrl once the other parameters are set
-    hubPublicUrl = publicUrl but { () => getHubUrl() };
+    hubPublicUrl = config:getAsString("b7a.websub.hub.url", default = publicUrl but { () => getHubUrl() });
     return startUpHubService(hubTopicRegistrationRequired, hubPublicUrl);
 }
 
 documentation {
     Object representing a Ballerina WebSub Hub.
 
-    F{{hubUrl}} The URL of the started up Ballerina WebSub Hub
+    F{{hubUrl}}             The URL of the started up Ballerina WebSub Hub
+    F{{hubServiceEndpoint}} The HTTP endpoint to which the Ballerina WebSub Hub is bound
 }
 public type WebSubHub object {
 
-    public {
-        string hubUrl;
-    }
+    public string hubUrl;
+    private http:Listener hubServiceEndpoint;
 
-    new (hubUrl) {}
+    new (hubUrl, hubServiceEndpoint) {}
 
     documentation {
         Stops the started up Ballerina WebSub Hub.
         
         R{{}} `boolean` indicating whether the internal Ballerina Hub was stopped
     }
-    public function stop() returns (boolean);
+    public function stop() returns boolean;
 
     documentation {
         Publishes an update against the topic in the initialized Ballerina Hub.
@@ -535,7 +543,7 @@ public type WebSubHub object {
         P{{contentType}} The content type header to set for the request delivering the payload
         R{{}} `error` if the hub is not initialized or does not represent the internal hub
     }
-    public function publishUpdate(string topic, string|xml|json|blob|io:ByteChannel payload,
+    public function publishUpdate(string topic, string|xml|json|byte[]|io:ByteChannel payload,
                                   string? contentType = ()) returns error?;
 
     documentation {
@@ -556,11 +564,12 @@ public type WebSubHub object {
 
 };
 
-public function WebSubHub::stop() returns (boolean) {
+function WebSubHub::stop() returns boolean {
+    self.hubServiceEndpoint.stop();
     return stopHubService(self.hubUrl);
 }
 
-public function WebSubHub::publishUpdate(string topic, string|xml|json|blob|io:ByteChannel payload,
+function WebSubHub::publishUpdate(string topic, string|xml|json|byte[]|io:ByteChannel payload,
                                          string? contentType = ()) returns error? {
 
     if (self.hubUrl == "") {
@@ -571,8 +580,8 @@ public function WebSubHub::publishUpdate(string topic, string|xml|json|blob|io:B
     WebSubContent content = {};
 
     match(payload) {
-        io:ByteChannel byteChannel => content.payload = constructBlob(byteChannel);
-        string|xml|json|blob => content.payload = payload;
+        io:ByteChannel byteChannel => content.payload = constructByteArray(byteChannel);
+        string|xml|json|byte[] => content.payload = payload;
     }
 
     match(contentType) {
@@ -582,7 +591,7 @@ public function WebSubHub::publishUpdate(string topic, string|xml|json|blob|io:B
                 string => content.contentType = mime:TEXT_PLAIN;
                 xml => content.contentType = mime:APPLICATION_XML;
                 json => content.contentType = mime:APPLICATION_JSON;
-                blob|io:ByteChannel => content.contentType = mime:APPLICATION_OCTET_STREAM;
+                byte[]|io:ByteChannel => content.contentType = mime:APPLICATION_OCTET_STREAM;
             }
         }
     }
@@ -590,11 +599,11 @@ public function WebSubHub::publishUpdate(string topic, string|xml|json|blob|io:B
     return validateAndPublishToInternalHub(self.hubUrl, topic, content);
 }
 
-public function WebSubHub::registerTopic(string topic) returns error? {
+function WebSubHub::registerTopic(string topic) returns error? {
     return registerTopicAtHub(topic, "");
 }
 
-public function WebSubHub::unregisterTopic(string topic) returns error? {
+function WebSubHub::unregisterTopic(string topic) returns error? {
     return unregisterTopicAtHub(topic, "");
 }
 
@@ -627,7 +636,7 @@ documentation {
     F{{leaseSeconds}} The lease second period specified for the particular subscription
     F{{createdAt}} The time at which the subscription was created
 }
-type SubscriptionDetails {
+type SubscriptionDetails record {
     string topic,
     string callback,
     string secret,
@@ -653,8 +662,8 @@ documentation {
     F{{payload}} The payload to be sent
     F{{contentType}} The content-type of the payload
 }
-type WebSubContent {
-    string|xml|json|blob|io:ByteChannel payload,
+type WebSubContent record {
+    string|xml|json|byte[]|io:ByteChannel payload,
     string contentType,
 };
 
@@ -670,5 +679,6 @@ documentation {
 }
 public type HubStartedUpError record {
     string message;
+    error? cause;
     WebSubHub startedUpHub;
 };

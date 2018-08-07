@@ -18,7 +18,7 @@ io:ByteChannel byteChannel = io:openFile("some/file.txt", io:RW);
 // Here is how 100 bytes are read from the channel.
 var readResult = byteChannel.read(100);
     match readResult {
-        (blob, int) content => {
+        (byte[], int) content => {
             return content; // Return the read content.
         }
     error err => {
@@ -27,7 +27,8 @@ var readResult = byteChannel.read(100);
 }
 
 // Write some content to the beginning of the file.
-blob content = "some content".toBlob("UTF-8");
+string someContent = "some content";
+byte[] content = someContent.toByteArray("UTF-8");
 var writeResult = byteChannel.write(content, 0);
 match writeResult {
     int numberOfBytesWritten => {
@@ -98,10 +99,6 @@ while (recordsChannel.hasNext()) {
         error err => {
             return err; // An IO error occurred when reading the records.
         }
-        () => {
-            error e = {message: "Record channel not initialized properly."};
-            return e;
-        }
     }
 }
 ```
@@ -109,14 +106,14 @@ while (recordsChannel.hasNext()) {
 A `.CSV` file can be read and written directly into a `CSVChannel`, as shown in this code snippet.
 
 ```ballerina
-var csvChannel = check io:openCsvFile("records.csv");
+var csvChannel = io:openCsvFile("records.csv");
 ```
 
 Records of the `.CSV` file can read directly into a table of a matching type.
 
  ```ballerina
 // First let’s define a type that matches a record in the CSV file.
-type Employee {
+type Employee record {
     string id;
     string name;
     float salary;
@@ -129,10 +126,73 @@ match csvChannel.getTable(Employee) {
         foreach employee in employees {
             totalSalary += employee.salary;
         }
-        return total; // Return total of salaries of all employees.
+        return totalSalary; // Return total of salaries of all employees.
     }
     error err => {
         return err; // An IO error occurred when reading the records.
     }
 }
 ```
+
+### Data Channels
+Ballerina supports performing data i/o operations
+
+Person object could be serialized into a file or a network socket in the following manner.
+
+```ballerina
+public type Person record {
+    string name;
+    int age;
+    float income;
+    boolean isMarried;
+};
+
+//Serialize record into binary
+function serialize(Person p, io:ByteChannel channel) {
+    io:DataChannel dc = new io:DataChannel(channel);
+    var length = lengthof p.name.toByteArray("UTF-8");
+    var lengthResult = dc.writeInt32(length);
+    var nameResult = dc.writeString(p.name, "UTF-8");
+    var ageResult = dc.writeInt16(p.age);
+    var incomeResult = dc.writeFloat64(p.income);
+    var maritalStatusResult = dc.writeBool(p.isMarried);
+    var closeResult = dc.close();
+}
+
+//Deserialize record into binary
+function deserialize(io:ByteChannel channel) returns Person {
+    Person person;
+    int nameLength;
+    string nameValue;
+    io:DataChannel dc = new io:DataChannel(channel);
+    //Read 32 bit singed integer
+    match dc.readInt32() {
+        int namel => nameLength = namel;
+        error e => log:printError("Error occurred while reading name length",err = e);
+    }
+    //Read UTF-8 encoded string represented through specified amount of bytes
+    match dc.readString(nameLength, "UTF-8") {
+        string name => person.name = name;
+        error e =>log:printError("Error occurred while reading name",err = e);
+    }
+    //Read 16 bit signed integer
+    match dc.readInt16() {
+        int age => person.age = age;
+        error e =>log:printError("Error occurred while reading age",err = e);
+    }
+    //Read 64 bit signed float
+    match dc.readFloat64() {
+        float income => person.income = income;
+        error e =>log:printError("Error occurred while reading income",err = e);
+    }
+    //Read boolean
+    match dc.readBool() {
+        boolean isMarried => person.isMarried = isMarried;
+        error e =>log:printError("Error occurred while reading marital status",err = e);
+    }
+    //Finally close the data channel
+    var closeResult = dc.close();
+    return person;
+}
+```
+

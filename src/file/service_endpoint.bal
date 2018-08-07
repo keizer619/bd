@@ -24,9 +24,7 @@ documentation {
     F{{config}} Represents necessary configurations that need to configure
 }
 public type Listener object {
-    private {
-        ListenerEndpointConfiguration config;
-    }
+    private ListenerEndpointConfiguration config;
 
     public function init(ListenerEndpointConfiguration listenerConfig) {
         self.config = listenerConfig;
@@ -48,7 +46,7 @@ documentation {
     F{{path}}  Directory path which need to listen
     F{{recursive}} Recursively monitor all sub folders or not in the given direcotry path
 }
-public type ListenerEndpointConfiguration {
+public type ListenerEndpointConfiguration record {
     string path,
     boolean recursive = false,
 };

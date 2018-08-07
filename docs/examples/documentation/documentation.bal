@@ -18,10 +18,8 @@ documentation {
 }
 public type DummyObject object {
 
-    public {
-        string fieldOne;
-        string fieldTwo;
-    }
+    public string fieldOne;
+    public string fieldTwo;
 
     // This is the documentation attachment for function `doThatOnObject`. You may use Markdown syntax to style the text in these descriptions.
     documentation {
@@ -48,7 +46,7 @@ documentation {
     F{{fieldTwo}} This is the description for the `DummyType`'s field `fieldTwo`.
                   `F` doc prefix is used to mark a field on Record.
 }
-public type DummyType {
+public type DummyType record {
     string fieldOne,
     int fieldTwo,
 };

@@ -56,18 +56,21 @@ service<http:Service> hubService {
             error => {}
         }
 
-        if (params.hasKey(HUB_MODE)) {
-            mode = params[HUB_MODE];
-        }
+        mode = params[HUB_MODE] but { () => "" } ;
 
-        if (params.hasKey(HUB_TOPIC)) {
-            string topicFromParams = params[HUB_TOPIC];
-            topic = http:decode(topicFromParams, "UTF-8") but { error => topicFromParams };
+        match (params[HUB_TOPIC]) {
+            string topicFromParams => {
+                topic = http:decode(topicFromParams, "UTF-8") but { error => topicFromParams };
+            }
+            () => {
+                topic = "";
+            }
         }
 
         if (mode == MODE_SUBSCRIBE || mode == MODE_UNSUBSCRIBE) {
             boolean validSubscriptionChangeRequest = false;
-            string callbackFromParams = params[HUB_CALLBACK];
+            // TODO: check the non-existing key at this point and return the 400
+            string callbackFromParams = params[HUB_CALLBACK] but { () => ""};
             string callback = http:decode(callbackFromParams, "UTF-8") but { error => callbackFromParams };
             match (validateSubscriptionChangeRequest(mode, topic, callback)) {
                 error err => {
@@ -102,10 +105,7 @@ service<http:Service> hubService {
                 done;
             }
 
-            string secret = "";
-            if (params.hasKey(PUBLISHER_SECRET)) {
-                secret = params[PUBLISHER_SECRET];
-            }
+            string secret = params[PUBLISHER_SECRET] but { () => "" };
             match(registerTopicAtHub(topic, secret)) {
                 error e => {
                     string errorMessage = e.message;
@@ -136,10 +136,7 @@ service<http:Service> hubService {
                 done;
             }
 
-            string secret = "";
-            if (params.hasKey(PUBLISHER_SECRET)) {
-                secret = params[PUBLISHER_SECRET];
-            }
+            string secret = params[PUBLISHER_SECRET] but { () => "" };
             match(unregisterTopicAtHub(topic, secret)) {
                 error e => {
                     string errorMessage = e.message;
@@ -160,14 +157,14 @@ service<http:Service> hubService {
         } else {
             if (mode != MODE_PUBLISH) {
                 params = request.getQueryParams();
-                mode = params[HUB_MODE];
-                string topicFromParams = params[HUB_TOPIC];
+                mode = params[HUB_MODE] but { () => "" };
+                string topicFromParams = params[HUB_TOPIC] but { () => "" };
                 topic = http:decode(topicFromParams, "UTF-8") but { error => topicFromParams };
             }
 
             if (mode == MODE_PUBLISH && hubRemotePublishingEnabled) {
                 if (!hubTopicRegistrationRequired || isTopicRegistered(topic)) {
-                    blob|error binaryPayload;
+                    byte[]|error binaryPayload;
                     string stringPayload;
                     string contentType;
                     if (hubRemotePublishingMode == REMOTE_PUBLISHING_MODE_FETCH) {
@@ -213,7 +210,7 @@ service<http:Service> hubService {
                                                                 + "for topic[" + topic + "]: " + err.message;
                                         log:printError(errorMessage);
                                         response.statusCode = http:BAD_REQUEST_400;
-                                        response.setTextPayload(errorMessage);
+                                        response.setTextPayload(untaint errorMessage);
                                         var responseError = client->respond(response);
                                         match(responseError) {
                                             error e => log:printError("Error responding on signature validation failure"
@@ -233,7 +230,7 @@ service<http:Service> hubService {
 
                     error? publishStatus = ();
                     match (binaryPayload) {
-                        blob payload => {
+                        byte[] payload => {
                             WebSubContent notification = { payload:payload, contentType:contentType };
                             publishStatus = publishToInternalHub(topic, notification);
                         }
@@ -241,7 +238,7 @@ service<http:Service> hubService {
                             string errorMessage = "Error extracting payload: " + err.message;
                             log:printError(errorMessage);
                             response.statusCode = http:BAD_REQUEST_400;
-                            response.setTextPayload(errorMessage);
+                            response.setTextPayload(untaint errorMessage);
                             var responseError = client->respond(response);
                             match(responseError) {
                                 error e => log:printError("Error responding on payload extraction failure for"
@@ -330,16 +327,12 @@ documentation {
 function verifyIntent(string callback, string topic, map<string> params) {
     endpoint http:Client callbackEp {
         url:callback,
-        secureSocket: httpSecureSocket
+        secureSocket: hubClientSecureSocket
     };
 
-    string mode = params[HUB_MODE];
-    int leaseSeconds;
-
-    if (params.hasKey(HUB_LEASE_SECONDS)) {
-        string strLeaseSeconds = params[HUB_LEASE_SECONDS];
-        leaseSeconds = <int>strLeaseSeconds but {error => 0};
-    }
+    string mode = params[HUB_MODE] but { () => "" };
+    string strLeaseSeconds = params[HUB_LEASE_SECONDS] but { () => "" };
+    int leaseSeconds = <int>strLeaseSeconds but {error => 0};
 
     //measured from the time the verification request was made from the hub to the subscriber from the recommendation
     int createdAt = time:currentTime().time;
@@ -374,9 +367,7 @@ function verifyIntent(string callback, string topic, map<string> params) {
                         if (mode == MODE_SUBSCRIBE) {
                             subscriptionDetails.leaseSeconds = leaseSeconds * 1000;
                             subscriptionDetails.createdAt = createdAt;
-                            if (params.hasKey(HUB_SECRET)) {
-                                subscriptionDetails.secret = params[HUB_SECRET];
-                            }
+                            subscriptionDetails.secret = params[HUB_SECRET] but { () => "" };
                             addSubscription(subscriptionDetails);
                         } else {
                             removeSubscription(topic, callback);
@@ -402,11 +393,13 @@ function verifyIntent(string callback, string topic, map<string> params) {
     }
     PendingSubscriptionChangeRequest pendingSubscriptionChangeRequest = new(mode, topic, callback);
     string key = generateKey(topic, callback);
-    if (pendingRequests.hasKey(key)) {
-        PendingSubscriptionChangeRequest retrievedRequest = <PendingSubscriptionChangeRequest>pendingRequests[key];
-        if (pendingSubscriptionChangeRequest.equals(retrievedRequest)) {
-            _ = pendingRequests.remove(key);
+    match (pendingRequests[key]) {
+        PendingSubscriptionChangeRequest retrievedRequest => {
+            if (pendingSubscriptionChangeRequest.equals(retrievedRequest)) {
+                _ = pendingRequests.remove(key);
+            }
         }
+        () => {}
     }
 }
 
@@ -609,7 +602,7 @@ documentation {
 function fetchTopicUpdate(string topic) returns http:Response|error {
     endpoint http:Client topicEp {
         url:topic,
-        secureSocket: httpSecureSocket
+        secureSocket: hubClientSecureSocket
     };
 
     http:Request request = new;
@@ -628,7 +621,7 @@ documentation {
 function distributeContent(string callback, SubscriptionDetails subscriptionDetails, WebSubContent webSubContent) {
     endpoint http:Client callbackEp {
         url:callback,
-        secureSocket: httpSecureSocket
+        secureSocket: hubClientSecureSocket
     };
 
     http:Request request = new;
@@ -697,7 +690,7 @@ documentation {
     F{{topic}} The topic for which notification would happen
     F{{secret}} The secret if specified by the topic's publisher
 }
-type TopicRegistration {
+type TopicRegistration record {
     string topic,
     string secret,
 };
@@ -711,11 +704,9 @@ documentation {
 }
 type PendingSubscriptionChangeRequest object {
 
-    public {
-        string mode;
-        string topic;
-        string callback;
-    }
+    public string mode;
+    public string topic;
+    public string callback;
 
     new (mode, topic, callback) {}
 

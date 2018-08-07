@@ -23,10 +23,8 @@ import ballerina/internal;
 import ballerina/system;
 
 public type ConfigJwtAuthProvider object {
-    public {
-        ConfigJwtAuthProviderConfig configJwtAuthProviderConfig;
-        ConfigAuthStoreProvider configAuthProvider;
-    }
+    public ConfigJwtAuthProviderConfig configJwtAuthProviderConfig;
+    public ConfigAuthStoreProvider configAuthProvider;
 
     public new(configJwtAuthProviderConfig) {
     }
@@ -91,7 +89,7 @@ function createJWTIssueConfig(ConfigJwtAuthProviderConfig authConfig) returns (i
     return config;
 }
 
-public type ConfigJwtAuthProviderConfig {
+public type ConfigJwtAuthProviderConfig record {
     string issuer,
     string audience,
     int expTime,

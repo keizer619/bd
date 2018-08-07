@@ -17,6 +17,8 @@
 @final string HTTP_SCHEME = "http://";
 @final string HTTPS_SCHEME = "https://";
 
+@final int DEFAULT_LISTENER_TIMEOUT = 120000; //2 mins
+
 documentation {Represents multipart primary type}
 @final public string MULTIPART_AS_PRIMARY_TYPE = "multipart/";
 // TODO: Document these. Should we make FORWARD a private constant?
@@ -144,14 +146,14 @@ function populateMultipartRequest(Request inRequest) returns Request {
                 foreach childPart in childParts {
                     // When performing passthrough scenarios, message needs to be built before
                     // invoking the endpoint to create a message datasource.
-                    var childBlobContent = childPart.getBlob();
+                    var childBlobContent = childPart.getByteArray();
                 }
-                bodyPart.setBodyParts(childParts, contentType = bodyPart.getContentType());
+                bodyPart.setBodyParts(childParts, contentType = untaint bodyPart.getContentType());
             } else {
-                var bodyPartBlobContent = bodyPart.getBlob();
+                var bodyPartBlobContent = bodyPart.getByteArray();
             }
         }
-        inRequest.setBodyParts(bodyParts, contentType = inRequest.getContentType());
+        inRequest.setBodyParts(bodyParts, contentType = untaint inRequest.getContentType());
     }
     return inRequest;
 }

@@ -22,15 +22,11 @@ documentation { JMS simple topic subscriber
 }
 public type SimpleTopicSubscriber object {
 
-    public {
-        SimpleTopicSubscriberEndpointConfiguration config;
-    }
+    public SimpleTopicSubscriberEndpointConfiguration config;
 
-    private {
-        Connection? connection;
-        Session? session;
-        TopicSubscriber? subscriber;
-    }
+    private Connection? connection;
+    private Session? session;
+    private TopicSubscriber? subscriber;
 
     documentation { Initialize simple topic subscirber endpoint
         P{{c}} Simple topic subscrirber enpoint configuration
@@ -132,7 +128,7 @@ documentation { Configuration related to simple topic subscriber endpoint
     F{{properties}} JMS message properties
     F{{topicPattern}} Topic name pattern
 }
-public type SimpleTopicSubscriberEndpointConfiguration {
+public type SimpleTopicSubscriberEndpointConfiguration record {
     string initialContextFactory = "bmbInitialContextFactory";
     string providerUrl = "amqp://admin:admin@ballerina/default?brokerlist='tcp://localhost:5672'";
     string connectionFactoryName = "ConnectionFactory";

@@ -23,10 +23,8 @@ documentation { JMS topic subscriber
 }
 public type TopicSubscriber object {
 
-    public {
-        TopicSubscriberActions consumerActions;
-        TopicSubscriberEndpointConfiguration config;
-    }
+    public TopicSubscriberActions consumerActions;
+    public TopicSubscriberEndpointConfiguration config;
 
     documentation { Initialize topic subscriber endpoint
         P{{c}} Topic subscriber configuration
@@ -77,7 +75,7 @@ documentation { Configuration related to topic subscriber endpoint
     F{{messageSelector}} Message selector condition to filter messages
     F{{identifier}} Identifier of topic subscriber endpoint
 }
-public type TopicSubscriberEndpointConfiguration {
+public type TopicSubscriberEndpointConfiguration record {
     Session? session;
     string topicPattern;
     string messageSelector;

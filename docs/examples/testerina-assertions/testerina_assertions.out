@@ -1,21 +1,24 @@
 $ ballerina test testerina_assertions.bal
----------------------------------------------------------------------------
-    T E S T S
----------------------------------------------------------------------------
----------------------------------------------------------------------------
-Running Tests of Package: .
----------------------------------------------------------------------------
+Compiling tests
+    testerina_assertions.bal
 
-Tests run: 14, Passed: 14, Failures: 0, Skipped: 0 - in TestSuite
+Running tests
+    testerina_assertions.bal
+	  [pass] testAssertFail2
+	  [pass] testAssertFail1
+	  [pass] testAssertFalse
+	  [pass] testAssertTrue
+	  [pass] testAssertNotEqualsJson
+	  [pass] testAssertNotEqualsString
+	  [pass] testAssertFloatArrayEquals
+	  [pass] testAssertIntArrayEquals
+	  [pass] testAssertStringArrayEquals
+	  [pass] testAssertBooleanEquals
+	  [pass] testAssertJsonEquals
+	  [pass] testAssertStringEquals
+	  [pass] testAssertFloatEquals
+	  [pass] testAssertIntEquals
 
-
----------------------------------------------------------------------------
-Results:
-
-Tests run: 14, Passed: 14, Failures: 0, Skipped: 0
----------------------------------------------------------------------------
-Summary:
-
-
-................................................................... SUCCESS
----------------------------------------------------------------------------
+	  14 passing
+	  0 failing
+	  0 skipped

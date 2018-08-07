@@ -35,10 +35,8 @@ documentation { Represent a JMS consumer endpoint
 }
 public type ConsumerTemplate object {
 
-    public {
-        ConsumerActions consumerActions;
-        ConsumerEndpointConfiguration config;
-    }
+    public ConsumerActions consumerActions;
+    public ConsumerEndpointConfiguration config;
 
     documentation { Initialize the consumer endpoint
         P{{c}} Configurations related to the endpoint
@@ -87,7 +85,7 @@ documentation { Configurations related to a JMS consumer object
     F{{session}} JMS session used to create the consumer
     F{{identifier}} Unique identifier of the consumer
 }
-public type ConsumerEndpointConfiguration {
+public type ConsumerEndpointConfiguration record {
     Session? session;
     string identifier;
 };

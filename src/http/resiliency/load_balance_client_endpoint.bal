@@ -23,13 +23,11 @@ documentation {
     F{{loadBalanceClientConfig}} The configurations for the load balance client endpoint
 }
 public type LoadBalanceClient object {
-    public {
-        string epName;
-        LoadBalanceClientEndpointConfiguration loadBalanceClientConfig;
-    }
-    private {
-        Client httpEP;
-    }
+
+    public string epName;
+    public LoadBalanceClientEndpointConfiguration loadBalanceClientConfig;
+
+    private Client httpEP;
 
     documentation {
         The initialization function for the load balance client endpoint.
@@ -68,7 +66,7 @@ documentation {
     F{{algorithm}} The algorithm to be used for load balancing. The HTTP package provides 'roundRobin()' by default
     F{{failover}} Configuration for load balancer whether to fail over in case of a failure
 }
-public type LoadBalanceClientEndpointConfiguration {
+public type LoadBalanceClientEndpointConfiguration record {
     CircuitBreakerConfig? circuitBreaker,
     int timeoutMillis = 60000,
     string httpVersion = "1.1",
@@ -87,7 +85,7 @@ public type LoadBalanceClientEndpointConfiguration {
     boolean failover = true;
 };
 
-public function LoadBalanceClient::init(LoadBalanceClientEndpointConfiguration lbClientConfig) {
+function LoadBalanceClient::init(LoadBalanceClientEndpointConfiguration lbClientConfig) {
     self.httpEP.httpClient = createLoadBalancerClient(lbClientConfig);
     self.httpEP.config.circuitBreaker = lbClientConfig.circuitBreaker;
     self.httpEP.config.timeoutMillis = lbClientConfig.timeoutMillis;

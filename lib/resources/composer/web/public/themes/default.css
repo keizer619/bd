@@ -199,7 +199,7 @@
         .left-panel .panel-actions i.fw.active:hover {
           opacity: 1;
           cursor: pointer;
-          background-color: #282828;
+          background-color: #2b2b2b;
           padding-top: 6px;
           padding-bottom: 4px; }
   .left-panel .panel-content {
@@ -508,6 +508,41 @@ body .ace-twilight {
   stroke-width: 0.75; }
 
 /*---------------------------
+      Action buttons
+---------------------------*/
+.ui.lifeline.icons.buttons .ui.button {
+  height: 25px;
+  width: 25px;
+  font-size: 12px;
+  line-height: 0;
+  padding: 0 !important;
+  cursor: pointer; }
+
+.ui.icon.lifeline.button {
+  height: 20px;
+  width: 20px;
+  font-size: 10px;
+  line-height: 0;
+  padding: 0 !important;
+  text-align: center;
+  color: #fff;
+  cursor: pointer; }
+  .ui.icon.lifeline.button.primary {
+    background: #2fb8b0; }
+    .ui.icon.lifeline.button.primary:hover {
+      background: #30a9a2; }
+  .ui.icon.lifeline.button.secondary {
+    background: #575a5e; }
+    .ui.icon.lifeline.button.secondary:hover {
+      background: #616467; }
+  .ui.icon.lifeline.button.circle {
+    border-radius: 50%; }
+  .ui.icon.lifeline.button i.fw,
+  .ui.icon.lifeline.button i.fa,
+  .ui.icon.lifeline.button i.icon {
+    vertical-align: middle; }
+
+/*---------------------------
       Default lines
 ---------------------------*/
 .client-line-header,
@@ -539,7 +574,7 @@ body .ace-twilight {
   fill: #555; }
 
 /*---------------------------
-      Worker lines 
+      Worker lines
 ---------------------------*/
 .worker {
   fill: #0070af;
@@ -706,21 +741,23 @@ body .ace-twilight {
   padding: 0;
   line-height: 30px;
   width: 120px; }
-  .ballerina-editor .bottom-right-controls-container .bottom-label-icon-wrapper {
+  .ballerina-editor .bottom-right-controls-container .view-split-view-btn .bottom-label-icon-wrapper {
     height: 30px;
     width: 30px;
     background-color: #3c3c3c;
-    margin: 0 5px;
     float: left;
     padding: 2px 8px;
     color: #fff;
     line-height: 26px; }
-  .ballerina-editor .bottom-right-controls-container .bottom-label-icon-wrapper:hover {
-    position: relative;
-    cursor: pointer;
-    background-color: #1e1e1e;
-    color: #e7eaeb;
-    font-weight: 400; }
+    .ballerina-editor .bottom-right-controls-container .view-split-view-btn .bottom-label-icon-wrapper:hover {
+      position: relative;
+      cursor: pointer;
+      background-color: #1e1e1e;
+      color: #e7eaeb;
+      font-weight: 400; }
+  .ballerina-editor .bottom-right-controls-container .view-split-view-btn.active .bottom-label-icon-wrapper {
+    background-color: #bebebe;
+    color: #616467; }
   .ballerina-editor .bottom-right-controls-container .bottom-view-label {
     display: none;
     cursor: pointer; }
@@ -777,6 +814,10 @@ body .ace-twilight {
 .swagger-view-container {
   background: #fff; }
 
+.close-swagger {
+  background-color: #1e1e1e;
+  padding: 5px; }
+
 swagger-ui h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: normal;
   line-height: normal; }
@@ -802,6 +843,13 @@ swagger-ui h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .SplitPane .vertical {
   overflow: hidden; }
 
+.swagger-container .SplitPane .Pane2 {
+  overflow: scroll;
+  padding-bottom: 40px; }
+
+.swagger-container .SplitPane .Pane1 {
+  padding-bottom: 40px; }
+
 .divider {
   fill: #e7eaeb; }
 
@@ -813,47 +861,29 @@ swagger-ui h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .top-menu {
   position: fixed;
-  padding: 3px 26px 6px !important;
+  padding: 3px 35px 6px 30px !important;
   height: 40px; }
   .top-menu.hidden {
     display: none !important; }
-  .top-menu .top-bar {
-    height: 30px;
-    margin-top: 5px;
-    width: auto;
-    margin-right: 10px !important; }
-    .top-menu .top-bar .row {
-      padding: 0 !important;
-      height: 30px !important; }
-      .top-menu .top-bar .row .column {
-        min-width: 130px;
-        width: 50%;
-        padding: 0 !important;
-        background: #fff;
-        box-shadow: none !important; }
-        .top-menu .top-bar .row .column .top-bar-row {
-          background: #fff !important;
-          margin-top: 0px !important;
-          border-bottom: 1px solid #ececec;
-          width: 140px;
-          display: flex; }
-          .top-menu .top-bar .row .column .top-bar-row .ui.label {
-            background-color: #fff !important;
-            flex-grow: 1 !important; }
-          .top-menu .top-bar .row .column .top-bar-row .top-bar-icon {
-            padding-right: 0px; }
-
-.mobile-top-bar .column {
-  min-width: 60px !important; }
-
-.mobile-top-bar .top-bar-row {
-  width: 30px !important; }
-
-.mobile-top-bar .ui.label:nth-child(2) {
-  display: none !important; }
+  .top-menu .top-bar > .ui.label > span {
+    vertical-align: text-top; }
+  .top-menu .top-bar > .ui.label > .detail {
+    margin-left: 0.5em; }
+  .top-menu .top-bar.mobile-top-bar > .ui.label > .icon {
+    margin: 0; }
+  .top-menu .top-bar.mobile-top-bar > .ui.label > span {
+    display: none; }
+  .top-menu.mobile-top-bar .menu .item .icon.menu-icon-right {
+    padding-right: 0 !important; }
+  .top-menu.mobile-top-bar .menu .item > .text {
+    display: none; }
+  .top-menu .definitions-menu {
+    margin-top: 6px !important; }
 
 .ui.bottom.right.popup {
   margin-right: -1em !important; }
+  .ui.bottom.right.popup.definitions-popup-window {
+    margin-right: 0 !important; }
 
 .ui.bottom.center.popup {
   transform-origin: center top;
@@ -894,18 +924,24 @@ swagger-ui h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   width: 165px;
   white-space: nowrap; }
 
-a.item.menu-button.ui.button.primary {
-  background: #2fb8b0;
-  color: #fff;
+a.item.menu-button.ui.button {
   padding: 7px 10px !important;
-  margin: 5px 10px 4px 4px !important;
+  margin: 5px 0 3px 0 !important;
   font-weight: 400;
   height: 28px; }
-  a.item.menu-button.ui.button.primary:hover {
-    background: #30a9a2 !important;
-    font-weight: 300 !important; }
-  a.item.menu-button.ui.button.primary .icon {
-    padding-right: 25px !important; }
+  a.item.menu-button.ui.button.primary {
+    background: #2fb8b0;
+    color: #fff; }
+    a.item.menu-button.ui.button.primary:hover {
+      background: #30a9a2 !important; }
+  a.item.menu-button.ui.button.secondary {
+    background: #575a5e;
+    color: #fff; }
+    a.item.menu-button.ui.button.secondary:hover {
+      background: #616467 !important; }
+  a.item.menu-button.ui.button .icon.menu-icon-right {
+    color: #fff;
+    padding-right: 25px; }
 
 .composer-logo {
   font-size: 15px; }
@@ -1028,26 +1064,26 @@ a.item.menu-button.ui.button.primary {
   color: #7D7D7D;
   height: 30px; }
   .editor-area .rc-tabs-tab-active .tab-title-wrapper.welcome-page-tab-title .close-tab {
-    background: #e7eaeb !important; }
+    background: #e7eaeb !important;
+    color: #7D7D7D; }
     .editor-area .rc-tabs-tab-active .tab-title-wrapper.welcome-page-tab-title .close-tab:hover {
       color: #474747; }
 
 .design-view-container .definition-dropdown {
-  width: 100px !important;
   padding-left: 30px !important;
   height: 28px;
-  margin: 4px 10px 4px 4px !important;
+  margin: 4px !important;
   padding-top: 6px !important; }
   .design-view-container .definition-dropdown .left-icon {
     position: absolute;
     margin: -14px -26px !important;
     font-size: 12px !important; }
 
-.design-view-container .item {
+.design-view-container .ui.menu .item {
   border: 0;
-  padding: 0 !important;
+  padding: 0;
   margin-top: 6px; }
-  .design-view-container .item .menu-icon, .design-view-container .item .menu-icon-right {
+  .design-view-container .ui.menu .item .menu-icon, .design-view-container .ui.menu .item .menu-icon-right {
     width: 25px !important;
     height: 25px !important;
     color: #222;
