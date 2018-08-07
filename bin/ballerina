@@ -218,7 +218,7 @@ $JAVACMD \
 	$JAVA_MODULES \
 	-classpath "$BALLERINA_CLASSPATH" \
 	-Dballerina.home=$BALLERINA_HOME \
-	-Dballerina.version=0.980.0 \
+	-Dballerina.version=0.980.1 \
 	-Djava.util.logging.config.class="org.ballerinalang.logging.util.LogConfigReader" \
 	-Djava.util.logging.manager="org.ballerinalang.logging.BLogManager" \
 	-Denable.nonblocking=false \

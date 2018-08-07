@@ -2509,7 +2509,7 @@ to redirected hubs/topics</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">topicIdentifier</td>
-                                                                <td class="cAPI-table-type"><a href="websub.html#TopicIdentifier">TOPIC_ID_HEADER</a>|<a href="websub.html#TopicIdentifier">TOPIC_ID_HEADER</a>_AND_PAYLOAD|TOPIC_ID_PAYLOAD_KEY?</td>
+                                                                <td class="cAPI-table-type"><a href="websub.html#TopicIdentifier">TOPIC_ID_HEADER_AND_PAYLOAD</a>|TOPIC_ID_PAYLOAD_KEY|TOPIC_ID_HEADER?</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"><p>The identifier based on which dispatching should happen for custom subscriber services</p>
 </td>
@@ -5157,7 +5157,7 @@ construction which makes this different from <code>getTextPayload()</code> funct
                                                                         <span class="fw-action"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;Listener&gt;
-                                                   </span> redirect(http:Response response, 305|303|307|301|302|300|308|304 code, string[] locations) returns (error?) 
+                                                   </span> redirect(http:Response response, 300|304|301|302|303|308|307|305 code, string[] locations) returns (error?) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -5184,7 +5184,7 @@ construction which makes this different from <code>getTextPayload()</code> funct
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|307|301|302|300|308|304</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">300</a>|304|301|302|303|308|307|305</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>

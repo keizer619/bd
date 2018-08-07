@@ -9445,7 +9445,7 @@ providing the actions for communicating with the caller.</p>
                                                                 <td class="cSummary-table-name">Response | error</td>
                                                                 <td class="cSummary-table-attach"></td>
                                                                 <td class="cSummary-table-type"></td>
-                                                                <td class="cSummary-table-desc"><a href="#invokeEndpoint">invokeEndpoint(string path, http:0.0.0:Request outRequest, HEAD|FORWARD|PUT|POST|OPTIONS|NONE|GET|PATCH|DELETE requestAction, http:0.0.0:CallerActions httpClient)</a><br/><p>The HEAD action implementation of the Circuit Breaker. This wraps the <code>head()</code> function of the underlying
+                                                                <td class="cSummary-table-desc"><a href="#invokeEndpoint">invokeEndpoint(string path, http:0.0.0:Request outRequest, DELETE|FORWARD|HEAD|NONE|PATCH|GET|PUT|OPTIONS|POST requestAction, http:0.0.0:CallerActions httpClient)</a><br/><p>The HEAD action implementation of the Circuit Breaker. This wraps the <code>head()</code> function of the underlying
 HTTP actions provider.</p>
 </td>
                                                             </tr>
@@ -10964,7 +10964,7 @@ other constraints posed by the request.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">scheme</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#AuthScheme">OAuth2</a>|Basic|JWT</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#AuthScheme">Basic</a>|JWT|OAuth2</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"><p>Scheme of the configuration (Basic, OAuth2, JWT etc.)</p>
 </td>
@@ -11389,7 +11389,7 @@ between 0 (exclusive) and 1 (inclusive).</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">policy</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#CachingPolicy">CACHE_CONTROL_AND_VALIDATORS</a>|RFC_7234</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#CachingPolicy">RFC_7234</a>|CACHE_CONTROL_AND_VALIDATORS</td>
                                                                 <td class="cAPI-table-default">CACHE_CONTROL_AND_VALIDATORS</td>
                                                                 <td class="cAPI-table-desc"><p>Gives the user some control over the caching behaviour. By default, this is set to
 <code>CACHE_CONTROL_AND_VALIDATORS</code>. The default behaviour is to allow caching only when the <code>cache-control</code>
@@ -11707,7 +11707,7 @@ the upstream service</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">keepAlive</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">AUTO</a>|ALWAYS|NEVER</td>
                                                                 <td class="cAPI-table-default">KEEPALIVE_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies whether to reuse a connection for multiple requests</p>
 </td>
@@ -11715,7 +11715,7 @@ the upstream service</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">chunking</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">AUTO</a>|ALWAYS|NEVER</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>The chunking behaviour of the request</p>
 </td>
@@ -11787,7 +11787,7 @@ the upstream service</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">compression</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">COMPRESSION_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies the way of handling compression (<code>accept-encoding</code>) header</p>
 </td>
@@ -12084,7 +12084,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">keepAlive</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">AUTO</a>|ALWAYS|NEVER</td>
                                                                 <td class="cAPI-table-default">KEEPALIVE_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies whether to reuse a connection for multiple requests</p>
 </td>
@@ -12092,7 +12092,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">chunking</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">AUTO</a>|ALWAYS|NEVER</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>The chunking behaviour of the request</p>
 </td>
@@ -12148,7 +12148,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">compression</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">COMPRESSION_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies the way of handling compression (<code>accept-encoding</code>) header</p>
 </td>
@@ -12512,7 +12512,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">compression</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>The status of compression</p>
 </td>
@@ -12520,7 +12520,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">chunking</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">AUTO</a>|ALWAYS|NEVER</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">CHUNKING_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Configures the chunking behaviour for the service</p>
 </td>
@@ -12860,7 +12860,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">keepAlive</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">AUTO</a>|ALWAYS|NEVER</td>
                                                                 <td class="cAPI-table-default">KEEPALIVE_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies whether to keep the connection alive (or not) for multiple request/response pairs</p>
 </td>
@@ -12868,7 +12868,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">chunking</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">AUTO</a>|ALWAYS|NEVER</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Chunking">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>The chunking behaviour of the request</p>
 </td>
@@ -12924,7 +12924,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">compression</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#Compression">NEVER</a>|AUTO|ALWAYS</td>
                                                                 <td class="cAPI-table-default">COMPRESSION_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Specifies the way of handling compression (<code>accept-encoding</code>) header</p>
 </td>
@@ -13423,7 +13423,7 @@ indicates that the number of connections are not restricted.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">keepAlive</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">AUTO</a>|ALWAYS|NEVER</td>
                                                                 <td class="cAPI-table-default">KEEPALIVE_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>The keepAlive behaviour of the endpoint</p>
 </td>
@@ -13633,7 +13633,7 @@ eg: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</p
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">keepAlive</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">NEVER</a>|ALWAYS|AUTO</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#KeepAlive">AUTO</a>|ALWAYS|NEVER</td>
                                                                 <td class="cAPI-table-default">KEEPALIVE_AUTO</td>
                                                                 <td class="cAPI-table-desc"><p>Can be set to either <code>KEEPALIVE_AUTO</code>, which respects the <code>connection</code> header, or <code>KEEPALIVE_ALWAYS</code>,
 which always keeps the connection alive, or <code>KEEPALIVE_NEVER</code>, which always closes the connection</p>
@@ -14655,7 +14655,7 @@ an <code>onIdleTimeout</code> resource in the WebSocket service.</p>
                                                 <!-- Function -->
                                                 
                                                     <h2 id="invokeEndpoint">
-                                                        <span class="fw-function sm-icon"> </span> public function invokeEndpoint(string path, http:0.0.0:Request outRequest, HEAD|FORWARD|PUT|POST|OPTIONS|NONE|GET|PATCH|DELETE requestAction, http:0.0.0:CallerActions httpClient) returns (Response | error) 
+                                                        <span class="fw-function sm-icon"> </span> public function invokeEndpoint(string path, http:0.0.0:Request outRequest, DELETE|FORWARD|HEAD|NONE|PATCH|GET|PUT|OPTIONS|POST requestAction, http:0.0.0:CallerActions httpClient) returns (Response | error) 
                                                     </h2>
                                                     
                                                         <p>
@@ -14690,7 +14690,7 @@ HTTP actions provider.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">requestAction</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#HttpOperation">HEAD</a>|FORWARD|PUT|POST|OPTIONS|NONE|GET|PATCH|DELETE</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#HttpOperation">DELETE</a>|FORWARD|HEAD|NONE|PATCH|GET|PUT|OPTIONS|POST</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"><p><code>HttpOperation</code> related to the request</p>
 </td>
@@ -15223,7 +15223,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         <span class="fw-function"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;APIListenerActions&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -15249,7 +15249,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"><p>The redirect status code to be sent</p>
 </td>
@@ -17053,7 +17053,7 @@ response using the rejected promise.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">currentCircuitState</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#CircuitState">HALF_OPEN</a>|CLOSED|OPEN</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#CircuitState">HALF_OPEN</a>|OPEN|CLOSED</td>
                                                                 <td class="cAPI-table-default">CB_CLOSED_STATE</td>
                                                                 <td class="cAPI-table-desc"><p>The current state the cicuit is in</p>
 </td>
@@ -18414,7 +18414,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         <span class="fw-function"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;Connection&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -18440,7 +18440,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"><p>The redirect status code to be sent</p>
 </td>
@@ -20205,7 +20205,7 @@ HTTP caching in the HTTP client endpoint.</p>
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">policy</td>
-                                                                <td class="cAPI-table-type"><a href="http.html#CachingPolicy">CACHE_CONTROL_AND_VALIDATORS</a>|RFC_7234</td>
+                                                                <td class="cAPI-table-type"><a href="http.html#CachingPolicy">RFC_7234</a>|CACHE_CONTROL_AND_VALIDATORS</td>
                                                                 <td class="cAPI-table-default">CACHE_CONTROL_AND_VALIDATORS</td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
@@ -28947,7 +28947,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         <span class="fw-function"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;SecureListenerActions&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -28973,7 +28973,7 @@ This error status code need to be 4xx or 5xx else the default status code would 
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"><p>The redirect status code to be sent</p>
 </td>
@@ -29917,7 +29917,7 @@ WebSocketListener can be called only in upgrade or onOpen resources.</p>
                                                                         <span class="fw-action"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;APIListener&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error?) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error?) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -29944,7 +29944,7 @@ WebSocketListener can be called only in upgrade or onOpen resources.</p>
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
@@ -32214,7 +32214,7 @@ providing the actions for communicating with the caller.</p>
                                                                         <span class="fw-action"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;Listener&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error?) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error?) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -32241,7 +32241,7 @@ providing the actions for communicating with the caller.</p>
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
@@ -33539,7 +33539,7 @@ providing the actions for communicating with the caller.</p>
                                                                         <span class="fw-action"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;NonListener&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error?) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error?) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -33566,7 +33566,7 @@ providing the actions for communicating with the caller.</p>
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
@@ -33970,7 +33970,7 @@ providing the actions for communicating with the caller.</p>
                                                                         <span class="fw-action"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;SecureListener&gt;
-                                                   </span> redirect(http:0.0.0:Response response, 304|305|308|303|307|302|301|300 code, string[] locations) returns (error?) 
+                                                   </span> redirect(http:0.0.0:Response response, 305|303|304|308|307|301|300|302 code, string[] locations) returns (error?) 
                                                                     </h2>
                                                                     
                                                                         <p>
@@ -33997,7 +33997,7 @@ providing the actions for communicating with the caller.</p>
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">code</td>
-                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">304</a>|305|308|303|307|302|301|300</td>
+                                                                                <td class="cAPI-table-type"><a href="http.html#RedirectCode">305</a>|303|304|308|307|301|300|302</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
