@@ -1571,7 +1571,7 @@
                                                                 <td class="cSummary-table-name">LengthWindow</td>
                                                                 <td class="cSummary-table-attach"></td>
                                                                 <td class="cSummary-table-type"></td>
-                                                                <td class="cSummary-table-desc"><a href="#lengthWindow">lengthWindow(int length, CURRENT|RESET|EXPIRED|ALL eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessorPointer)</a><br/></td>
+                                                                <td class="cSummary-table-desc"><a href="#lengthWindow">lengthWindow(int length, ALL|RESET|EXPIRED|CURRENT eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessorPointer)</a><br/></td>
                                                             </tr>
                                                         
                                                     
@@ -1580,7 +1580,7 @@
                                                                 <td class="cSummary-table-name">TimeWindow</td>
                                                                 <td class="cSummary-table-attach"></td>
                                                                 <td class="cSummary-table-type"></td>
-                                                                <td class="cSummary-table-desc"><a href="#timeWindow">timeWindow(int timeLength, CURRENT|RESET|EXPIRED|ALL eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessPointer)</a><br/></td>
+                                                                <td class="cSummary-table-desc"><a href="#timeWindow">timeWindow(int timeLength, ALL|RESET|EXPIRED|CURRENT eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessPointer)</a><br/></td>
                                                             </tr>
                                                         
                                                     
@@ -1636,7 +1636,7 @@
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
@@ -2070,7 +2070,7 @@
                                                 <!-- Function -->
                                                 
                                                     <h2 id="lengthWindow">
-                                                        <span class="fw-function sm-icon"> </span> public function lengthWindow(int length, CURRENT|RESET|EXPIRED|ALL eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessorPointer) returns (LengthWindow) 
+                                                        <span class="fw-function sm-icon"> </span> public function lengthWindow(int length, ALL|RESET|EXPIRED|CURRENT eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessorPointer) returns (LengthWindow) 
                                                     </h2>
                                                      
                                                     <table>
@@ -2090,7 +2090,7 @@
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
@@ -2138,7 +2138,7 @@
                                                 <!-- Function -->
                                                 
                                                     <h2 id="timeWindow">
-                                                        <span class="fw-function sm-icon"> </span> public function timeWindow(int timeLength, CURRENT|RESET|EXPIRED|ALL eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessPointer) returns (TimeWindow) 
+                                                        <span class="fw-function sm-icon"> </span> public function timeWindow(int timeLength, ALL|RESET|EXPIRED|CURRENT eventType, function (streams:0.0.0:StreamEvent[]) returns (()) nextProcessPointer) returns (TimeWindow) 
                                                     </h2>
                                                      
                                                     <table>
@@ -2158,7 +2158,7 @@
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                 <td class="cAPI-table-default"></td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
@@ -2253,7 +2253,7 @@
                                                                         <span class="fw-function"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;Aggregator&gt;
-                                                   </span> process(int value, CURRENT|RESET|EXPIRED|ALL eventType) returns (int) 
+                                                   </span> process(int value, ALL|RESET|EXPIRED|CURRENT eventType) returns (int) 
                                                                     </h2>
                                                                      
                                                                     <table>
@@ -2273,7 +2273,7 @@
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
@@ -2481,7 +2481,7 @@
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                 <td class="cAPI-table-default">ALL</td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
@@ -2749,7 +2749,7 @@
                                                                         <span class="fw-function"></span>
                                                                         <span class="thin-text light-gray">
                                                    &lt;Sum&gt;
-                                                   </span> process(int value, CURRENT|RESET|EXPIRED|ALL eventType) returns (int) 
+                                                   </span> process(int value, ALL|RESET|EXPIRED|CURRENT eventType) returns (int) 
                                                                     </h2>
                                                                      
                                                                     <table>
@@ -2769,7 +2769,7 @@
                                                                         
                                                                             <tr>
                                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                                 <td class="cAPI-table-default"></td>
                                                                                 <td class="cAPI-table-desc"></td>
                                                                             </tr>
@@ -2870,7 +2870,7 @@
                                                         
                                                             <tr>
                                                                 <td class="cAPI-table-name">eventType</td>
-                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">CURRENT</a>|RESET|EXPIRED|ALL</td>
+                                                                <td class="cAPI-table-type"><a href="streams.html#EventType">ALL</a>|RESET|EXPIRED|CURRENT</td>
                                                                 <td class="cAPI-table-default">ALL</td>
                                                                 <td class="cAPI-table-desc"></td>
                                                             </tr>
